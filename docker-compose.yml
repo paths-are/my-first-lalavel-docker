@@ -1,0 +1,40 @@
+version: '3'
+services:
+# laravel
+  app:
+    build: ./docker/app
+    container_name: web_app
+    ports:
+       - 8080:80
+    volumes:
+     - ./src:/var/www/html
+# mariadb
+  db:
+    image: mariadb:5.5
+    container_name: web_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=webapp
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/db:/var/lib/mariadb
+      - ./docker/db:/docker-entrypoint-initdb.d
+# phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: web_phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+    ports:
+      - 8081:80
+# mailhog
+  mailhog:
+    container_name: web_smtp
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+      - 1025:1025
