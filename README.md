@@ -1,6 +1,7 @@
 # プロジェクトフォルダ作成
 
 ```shell:setup.sh
+
 mkdir docker src docker/app docker/db
 touch docker/app/000-default.conf
 touch docker/app/Dockerfile
@@ -13,6 +14,7 @@ touch Makefile
 # ファイル内容入力（参考サイト通りにやる）
 
 ```conf:000-default.conf
+
 <VirtualHost *:80>
        ServerAdmin webmaster@localhost
        DocumentRoot /var/www/html/webapp/public
@@ -22,6 +24,7 @@ touch Makefile
            AllowOverride All
        </Directory>
 </VirtualHost>
+
 ```
 
 ```Dockerfile:Dockerfile
