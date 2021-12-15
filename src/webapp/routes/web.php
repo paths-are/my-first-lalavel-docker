@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $value = 'Snome';
+    $arr = ['Snome1', 'Snome2', 'Snome3'];
+  
+    return view('sample', compact('value', 'arr'));
+    // return view('welcome');
 });

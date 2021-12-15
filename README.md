@@ -1760,8 +1760,12 @@ https://beyondjapan.com/blog/2020/10/makefile-docker/
 
 https://blog.sat.ne.jp/2021/03/12/laraveldocker%e7%92%b0%e5%a2%83/
 
-https://simablog.net/aws-docker-laravel/
-https://simablog.net/docker-laravel-nginx-mysql/
+% https://simablog.net/aws-docker-laravel/
+% https://simablog.net/docker-laravel-nginx-mysql/
 
-https://sg-report.com/laravel-docker-awsec2-web1/
-https://sg-report.com/laravel-docker-awsec2-web2/
+% https://sg-report.com/laravel-docker-awsec2-web1/
+% https://sg-report.com/laravel-docker-awsec2-web2/
+
+
+# Database 設定で参考になった記事
+https://snome.jp/framework/laravel-connect-db/
