@@ -1767,5 +1767,8 @@ https://blog.sat.ne.jp/2021/03/12/laraveldocker%e7%92%b0%e5%a2%83/
 % https://sg-report.com/laravel-docker-awsec2-web2/
 
 
+# view の編集で参考になった記事
+https://snome.jp/framework/laravel-send-data/
+
 # Database 設定で参考になった記事
 https://snome.jp/framework/laravel-connect-db/
