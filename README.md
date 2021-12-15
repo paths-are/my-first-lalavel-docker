@@ -1,6 +1,6 @@
 # プロジェクトフォルダ作成
 
-```shell
+```shell:setup.sh
 mkdir docker src docker/app docker/db
 touch docker/app/000-default.conf
 touch docker/app/Dockerfile
@@ -12,7 +12,7 @@ touch Makefile
 
 # ファイル内容入力（参考サイト通りにやる）
 
-```000-default.conf
+```conf:000-default.conf
 <VirtualHost *:80>
        ServerAdmin webmaster@localhost
        DocumentRoot /var/www/html/webapp/public
@@ -24,7 +24,7 @@ touch Makefile
 </VirtualHost>
 ```
 
-```Dockerfile
+```Dockerfile:Dockerfile
 FROM php:7.4-apache
 
 #Composerのインストール
@@ -46,7 +46,7 @@ COPY php.ini /usr/local/etc/php/
 COPY 000-default.conf /etc/apache2/sites-enabled/
 ```
 
-```php.ini
+```ini:php.ini
 [Date]
 date.timezone = "Asia/Tokyo"
 [mbstring]
@@ -54,7 +54,7 @@ mbstring.internal_encoding = "UTF-8"
 mbstring.language = "Japanese"
 ```
 
-```docker-compose.yml
+```yml:docker-compose.yml
 version: '3'
 services:
 # laravel
@@ -97,7 +97,7 @@ services:
       - 1025:1025
 ```
 
-```Makefile
+```Makefile:Makefile
 .PHONY: build up stop down show
 NAME=web_app
 VERSION=1.0
@@ -130,7 +130,10 @@ login:
 
 # コマンド実行
 
-```docker-compose build.log
+<details>
+  <summary>docker-compose build</summary>
+
+```log:docker-compose build
 $ docker-compose build
 [+] Building 28.7s (13/13) FINISHED
  => [internal] load build definition from Dockerfile                                                                                                                                                                                                                       0.0s
@@ -187,7 +190,12 @@ Use 'docker scan' to run Snyk tests against images to find vulnerabilities and l
 
 ```
 
-```docker-compose up -d.log （ログは全部記録できなかった。）
+</details>
+
+<details>
+  <summary>docker-compose up -d</summary>
+
+```log:docker-compose up -d （ログは全部記録できなかった。）
    - e1eabe0537eb Download complete                                                                                                                                                                                                                                       24.2s
    - 4701f1215c13 Download complete                                                                                                                                                                                                                                       24.2s
    - 1f47c10fd782 Download complete                                                                                                                                                                                                                                       24.2s
@@ -1219,394 +1227,402 @@ Use 'docker scan' to run Snyk tests against images to find vulnerabilities and l
  - Container web_app              Started
 ```
 
-```docker exec web_app composer create-project "laravel/laravel=~6.0" --prefer-dist webapp .log
+</details>
+
+<details>
+  <summary>docker exec web_app composer create-project "laravel/laravel=~6.0" --prefer-dist webapp</summary>
+
+```log:docker exec web_app composer create-project "laravel/laravel=~6.0" --prefer-dist webapp
 
 $ docker exec web_app composer create-project "laravel/laravel=~6.0" --prefer-dist webapp
 Creating a "laravel/laravel=~6.0" project at "./webapp"
 Installing laravel/laravel (v6.20.1)
-  - Downloading laravel/laravel (v6.20.1)
-  - Installing laravel/laravel (v6.20.1): Extracting archive
+
+- Downloading laravel/laravel (v6.20.1)
+- Installing laravel/laravel (v6.20.1): Extracting archive
 Created project in /var/www/html/webapp
 > @php -r "file_exists('.env') || copy('.env.example', '.env');"
-Loading composer repositories with package information
-Updating dependencies
-Lock file operations: 93 installs, 0 updates, 0 removals
-  - Locking doctrine/inflector (2.0.4)
-  - Locking doctrine/instantiator (1.4.0)
-  - Locking doctrine/lexer (1.2.1)
-  - Locking dragonmantank/cron-expression (v2.3.1)
-  - Locking egulias/email-validator (2.1.25)
-  - Locking facade/flare-client-php (1.9.1)
-  - Locking facade/ignition (1.18.0)
-  - Locking facade/ignition-contracts (1.0.2)
-  - Locking fakerphp/faker (v1.17.0)
-  - Locking fideloper/proxy (4.4.1)
-  - Locking filp/whoops (2.14.4)
-  - Locking hamcrest/hamcrest-php (v2.0.1)
-  - Locking laravel/framework (v6.20.43)
-  - Locking laravel/tinker (v2.6.3)
-  - Locking league/commonmark (1.6.6)
-  - Locking league/flysystem (1.1.9)
-  - Locking league/mime-type-detection (1.9.0)
-  - Locking mockery/mockery (1.4.4)
-  - Locking monolog/monolog (2.3.5)
-  - Locking myclabs/deep-copy (1.10.2)
-  - Locking nesbot/carbon (2.55.2)
-  - Locking nikic/php-parser (v4.13.2)
-  - Locking nunomaduro/collision (v3.2.0)
-  - Locking opis/closure (3.6.2)
-  - Locking paragonie/random_compat (v9.99.100)
-  - Locking phar-io/manifest (2.0.3)
-  - Locking phar-io/version (3.1.0)
-  - Locking php-parallel-lint/php-console-color (v0.3)
-  - Locking php-parallel-lint/php-console-highlighter (v0.5)
-  - Locking phpdocumentor/reflection-common (2.2.0)
-  - Locking phpdocumentor/reflection-docblock (5.3.0)
-  - Locking phpdocumentor/type-resolver (1.5.1)
-  - Locking phpoption/phpoption (1.8.1)
-  - Locking phpspec/prophecy (v1.15.0)
-  - Locking phpunit/php-code-coverage (9.2.10)
-  - Locking phpunit/php-file-iterator (3.0.6)
-  - Locking phpunit/php-invoker (3.1.1)
-  - Locking phpunit/php-text-template (2.0.4)
-  - Locking phpunit/php-timer (5.0.3)
-  - Locking phpunit/phpunit (9.5.10)
-  - Locking psr/container (1.1.2)
-  - Locking psr/log (1.1.4)
-  - Locking psr/simple-cache (1.0.1)
-  - Locking psy/psysh (v0.10.12)
-  - Locking ramsey/uuid (3.9.6)
-  - Locking scrivo/highlight.php (v9.18.1.8)
-  - Locking sebastian/cli-parser (1.0.1)
-  - Locking sebastian/code-unit (1.0.8)
-  - Locking sebastian/code-unit-reverse-lookup (2.0.3)
-  - Locking sebastian/comparator (4.0.6)
-  - Locking sebastian/complexity (2.0.2)
-  - Locking sebastian/diff (4.0.4)
-  - Locking sebastian/environment (5.1.3)
-  - Locking sebastian/exporter (4.0.4)
-  - Locking sebastian/global-state (5.0.3)
-  - Locking sebastian/lines-of-code (1.0.3)
-  - Locking sebastian/object-enumerator (4.0.4)
-  - Locking sebastian/object-reflector (2.0.4)
-  - Locking sebastian/recursion-context (4.0.4)
-  - Locking sebastian/resource-operations (3.0.3)
-  - Locking sebastian/type (2.3.4)
-  - Locking sebastian/version (3.0.2)
-  - Locking swiftmailer/swiftmailer (v6.3.0)
-  - Locking symfony/console (v4.4.34)
-  - Locking symfony/css-selector (v5.4.0)
-  - Locking symfony/debug (v4.4.31)
-  - Locking symfony/deprecation-contracts (v2.5.0)
-  - Locking symfony/error-handler (v4.4.34)
-  - Locking symfony/event-dispatcher (v4.4.34)
-  - Locking symfony/event-dispatcher-contracts (v1.1.11)
-  - Locking symfony/finder (v4.4.30)
-  - Locking symfony/http-client-contracts (v2.5.0)
-  - Locking symfony/http-foundation (v4.4.34)
-  - Locking symfony/http-kernel (v4.4.35)
-  - Locking symfony/mime (v5.4.0)
-  - Locking symfony/polyfill-ctype (v1.23.0)
-  - Locking symfony/polyfill-iconv (v1.23.0)
-  - Locking symfony/polyfill-intl-idn (v1.23.0)
-  - Locking symfony/polyfill-intl-normalizer (v1.23.0)
-  - Locking symfony/polyfill-mbstring (v1.23.1)
-  - Locking symfony/polyfill-php72 (v1.23.0)
-  - Locking symfony/polyfill-php73 (v1.23.0)
-  - Locking symfony/polyfill-php80 (v1.23.1)
-  - Locking symfony/process (v4.4.35)
-  - Locking symfony/routing (v4.4.34)
-  - Locking symfony/service-contracts (v2.5.0)
-  - Locking symfony/translation (v4.4.34)
-  - Locking symfony/translation-contracts (v2.5.0)
-  - Locking symfony/var-dumper (v4.4.34)
-  - Locking theseer/tokenizer (1.2.1)
-  - Locking tijsverkoyen/css-to-inline-styles (2.2.4)
-  - Locking vlucas/phpdotenv (v3.6.10)
-  - Locking webmozart/assert (1.10.0)
+> Loading composer repositories with package information
+> Updating dependencies
+> Lock file operations: 93 installs, 0 updates, 0 removals
+- Locking doctrine/inflector (2.0.4)
+- Locking doctrine/instantiator (1.4.0)
+- Locking doctrine/lexer (1.2.1)
+- Locking dragonmantank/cron-expression (v2.3.1)
+- Locking egulias/email-validator (2.1.25)
+- Locking facade/flare-client-php (1.9.1)
+- Locking facade/ignition (1.18.0)
+- Locking facade/ignition-contracts (1.0.2)
+- Locking fakerphp/faker (v1.17.0)
+- Locking fideloper/proxy (4.4.1)
+- Locking filp/whoops (2.14.4)
+- Locking hamcrest/hamcrest-php (v2.0.1)
+- Locking laravel/framework (v6.20.43)
+- Locking laravel/tinker (v2.6.3)
+- Locking league/commonmark (1.6.6)
+- Locking league/flysystem (1.1.9)
+- Locking league/mime-type-detection (1.9.0)
+- Locking mockery/mockery (1.4.4)
+- Locking monolog/monolog (2.3.5)
+- Locking myclabs/deep-copy (1.10.2)
+- Locking nesbot/carbon (2.55.2)
+- Locking nikic/php-parser (v4.13.2)
+- Locking nunomaduro/collision (v3.2.0)
+- Locking opis/closure (3.6.2)
+- Locking paragonie/random_compat (v9.99.100)
+- Locking phar-io/manifest (2.0.3)
+- Locking phar-io/version (3.1.0)
+- Locking php-parallel-lint/php-console-color (v0.3)
+- Locking php-parallel-lint/php-console-highlighter (v0.5)
+- Locking phpdocumentor/reflection-common (2.2.0)
+- Locking phpdocumentor/reflection-docblock (5.3.0)
+- Locking phpdocumentor/type-resolver (1.5.1)
+- Locking phpoption/phpoption (1.8.1)
+- Locking phpspec/prophecy (v1.15.0)
+- Locking phpunit/php-code-coverage (9.2.10)
+- Locking phpunit/php-file-iterator (3.0.6)
+- Locking phpunit/php-invoker (3.1.1)
+- Locking phpunit/php-text-template (2.0.4)
+- Locking phpunit/php-timer (5.0.3)
+- Locking phpunit/phpunit (9.5.10)
+- Locking psr/container (1.1.2)
+- Locking psr/log (1.1.4)
+- Locking psr/simple-cache (1.0.1)
+- Locking psy/psysh (v0.10.12)
+- Locking ramsey/uuid (3.9.6)
+- Locking scrivo/highlight.php (v9.18.1.8)
+- Locking sebastian/cli-parser (1.0.1)
+- Locking sebastian/code-unit (1.0.8)
+- Locking sebastian/code-unit-reverse-lookup (2.0.3)
+- Locking sebastian/comparator (4.0.6)
+- Locking sebastian/complexity (2.0.2)
+- Locking sebastian/diff (4.0.4)
+- Locking sebastian/environment (5.1.3)
+- Locking sebastian/exporter (4.0.4)
+- Locking sebastian/global-state (5.0.3)
+- Locking sebastian/lines-of-code (1.0.3)
+- Locking sebastian/object-enumerator (4.0.4)
+- Locking sebastian/object-reflector (2.0.4)
+- Locking sebastian/recursion-context (4.0.4)
+- Locking sebastian/resource-operations (3.0.3)
+- Locking sebastian/type (2.3.4)
+- Locking sebastian/version (3.0.2)
+- Locking swiftmailer/swiftmailer (v6.3.0)
+- Locking symfony/console (v4.4.34)
+- Locking symfony/css-selector (v5.4.0)
+- Locking symfony/debug (v4.4.31)
+- Locking symfony/deprecation-contracts (v2.5.0)
+- Locking symfony/error-handler (v4.4.34)
+- Locking symfony/event-dispatcher (v4.4.34)
+- Locking symfony/event-dispatcher-contracts (v1.1.11)
+- Locking symfony/finder (v4.4.30)
+- Locking symfony/http-client-contracts (v2.5.0)
+- Locking symfony/http-foundation (v4.4.34)
+- Locking symfony/http-kernel (v4.4.35)
+- Locking symfony/mime (v5.4.0)
+- Locking symfony/polyfill-ctype (v1.23.0)
+- Locking symfony/polyfill-iconv (v1.23.0)
+- Locking symfony/polyfill-intl-idn (v1.23.0)
+- Locking symfony/polyfill-intl-normalizer (v1.23.0)
+- Locking symfony/polyfill-mbstring (v1.23.1)
+- Locking symfony/polyfill-php72 (v1.23.0)
+- Locking symfony/polyfill-php73 (v1.23.0)
+- Locking symfony/polyfill-php80 (v1.23.1)
+- Locking symfony/process (v4.4.35)
+- Locking symfony/routing (v4.4.34)
+- Locking symfony/service-contracts (v2.5.0)
+- Locking symfony/translation (v4.4.34)
+- Locking symfony/translation-contracts (v2.5.0)
+- Locking symfony/var-dumper (v4.4.34)
+- Locking theseer/tokenizer (1.2.1)
+- Locking tijsverkoyen/css-to-inline-styles (2.2.4)
+- Locking vlucas/phpdotenv (v3.6.10)
+- Locking webmozart/assert (1.10.0)
 Writing lock file
 Installing dependencies from lock file (including require-dev)
 Package operations: 93 installs, 0 updates, 0 removals
-  - Downloading doctrine/inflector (2.0.4)
-  - Downloading doctrine/lexer (1.2.1)
-  - Downloading dragonmantank/cron-expression (v2.3.1)
-  - Downloading symfony/polyfill-php80 (v1.23.1)
-  - Downloading symfony/polyfill-php72 (v1.23.0)
-  - Downloading symfony/polyfill-mbstring (v1.23.1)
-  - Downloading symfony/var-dumper (v4.4.34)
-  - Downloading symfony/deprecation-contracts (v2.5.0)
-  - Downloading psr/container (1.1.2)
-  - Downloading symfony/service-contracts (v2.5.0)
-  - Downloading symfony/polyfill-php73 (v1.23.0)
-  - Downloading symfony/console (v4.4.34)
-  - Downloading scrivo/highlight.php (v9.18.1.8)
-  - Downloading psr/log (1.1.4)
-  - Downloading monolog/monolog (2.3.5)
-  - Downloading symfony/polyfill-ctype (v1.23.0)
-  - Downloading phpoption/phpoption (1.8.1)
-  - Downloading vlucas/phpdotenv (v3.6.10)
-  - Downloading symfony/css-selector (v5.4.0)
-  - Downloading tijsverkoyen/css-to-inline-styles (2.2.4)
-  - Downloading symfony/routing (v4.4.34)
-  - Downloading symfony/process (v4.4.35)
-  - Downloading symfony/polyfill-intl-normalizer (v1.23.0)
-  - Downloading symfony/polyfill-intl-idn (v1.23.0)
-  - Downloading symfony/mime (v5.4.0)
-  - Downloading symfony/http-foundation (v4.4.34)
-  - Downloading symfony/http-client-contracts (v2.5.0)
-  - Downloading symfony/event-dispatcher-contracts (v1.1.11)
-  - Downloading symfony/event-dispatcher (v4.4.34)
-  - Downloading symfony/debug (v4.4.31)
-  - Downloading symfony/error-handler (v4.4.34)
-  - Downloading symfony/http-kernel (v4.4.35)
-  - Downloading symfony/finder (v4.4.30)
-  - Downloading symfony/polyfill-iconv (v1.23.0)
-  - Downloading egulias/email-validator (2.1.25)
-  - Downloading swiftmailer/swiftmailer (v6.3.0)
-  - Downloading paragonie/random_compat (v9.99.100)
-  - Downloading ramsey/uuid (3.9.6)
-  - Downloading psr/simple-cache (1.0.1)
-  - Downloading opis/closure (3.6.2)
-  - Downloading symfony/translation-contracts (v2.5.0)
-  - Downloading symfony/translation (v4.4.34)
-  - Downloading nesbot/carbon (2.55.2)
-  - Downloading league/mime-type-detection (1.9.0)
-  - Downloading league/flysystem (1.1.9)
-  - Downloading league/commonmark (1.6.6)
-  - Downloading laravel/framework (v6.20.43)
-  - Downloading filp/whoops (2.14.4)
-  - Downloading facade/ignition-contracts (1.0.2)
-  - Downloading facade/flare-client-php (1.9.1)
-  - Downloading facade/ignition (1.18.0)
-  - Downloading fakerphp/faker (v1.17.0)
-  - Downloading fideloper/proxy (4.4.1)
-  - Downloading nikic/php-parser (v4.13.2)
-  - Downloading psy/psysh (v0.10.12)
-  - Downloading laravel/tinker (v2.6.3)
-  - Downloading hamcrest/hamcrest-php (v2.0.1)
-  - Downloading mockery/mockery (1.4.4)
-  - Downloading php-parallel-lint/php-console-color (v0.3)
-  - Downloading php-parallel-lint/php-console-highlighter (v0.5)
-  - Downloading nunomaduro/collision (v3.2.0)
-  - Downloading webmozart/assert (1.10.0)
-  - Downloading phpdocumentor/reflection-common (2.2.0)
-  - Downloading phpdocumentor/type-resolver (1.5.1)
-  - Downloading phpdocumentor/reflection-docblock (5.3.0)
-  - Downloading sebastian/version (3.0.2)
-  - Downloading sebastian/type (2.3.4)
-  - Downloading sebastian/resource-operations (3.0.3)
-  - Downloading sebastian/recursion-context (4.0.4)
-  - Downloading sebastian/object-reflector (2.0.4)
-  - Downloading sebastian/object-enumerator (4.0.4)
-  - Downloading sebastian/global-state (5.0.3)
-  - Downloading sebastian/exporter (4.0.4)
-  - Downloading sebastian/environment (5.1.3)
-  - Downloading sebastian/diff (4.0.4)
-  - Downloading sebastian/comparator (4.0.6)
-  - Downloading sebastian/code-unit (1.0.8)
-  - Downloading sebastian/cli-parser (1.0.1)
-  - Downloading phpunit/php-timer (5.0.3)
-  - Downloading phpunit/php-text-template (2.0.4)
-  - Downloading phpunit/php-invoker (3.1.1)
-  - Downloading phpunit/php-file-iterator (3.0.6)
-  - Downloading theseer/tokenizer (1.2.1)
-  - Downloading sebastian/lines-of-code (1.0.3)
-  - Downloading sebastian/complexity (2.0.2)
-  - Downloading sebastian/code-unit-reverse-lookup (2.0.3)
-  - Downloading phpunit/php-code-coverage (9.2.10)
-  - Downloading doctrine/instantiator (1.4.0)
-  - Downloading phpspec/prophecy (v1.15.0)
-  - Downloading phar-io/version (3.1.0)
-  - Downloading phar-io/manifest (2.0.3)
-  - Downloading myclabs/deep-copy (1.10.2)
-  - Downloading phpunit/phpunit (9.5.10)
-  0/93 [>---------------------------]   0%
-  3/93 [>---------------------------]   3%
-  9/93 [==>-------------------------]   9%
- 11/93 [===>------------------------]  11%
- 13/93 [===>------------------------]  13%
- 17/93 [=====>----------------------]  18%
- 20/93 [======>---------------------]  21%
- 21/93 [======>---------------------]  22%
- 22/93 [======>---------------------]  23%
- 25/93 [=======>--------------------]  26%
- 28/93 [========>-------------------]  30%
- 32/93 [=========>------------------]  34%
- 35/93 [==========>-----------------]  37%
- 38/93 [===========>----------------]  40%
- 42/93 [============>---------------]  45%
- 44/93 [=============>--------------]  47%
- 47/93 [==============>-------------]  50%
- 48/93 [==============>-------------]  51%
- 51/93 [===============>------------]  54%
- 53/93 [===============>------------]  56%
- 57/93 [=================>----------]  61%
- 58/93 [=================>----------]  62%
- 62/93 [==================>---------]  66%
- 70/93 [=====================>------]  75%
- 74/93 [======================>-----]  79%
- 78/93 [=======================>----]  83%
- 86/93 [=========================>--]  92%
- 90/93 [===========================>]  96%
- 93/93 [============================] 100%
-  - Installing doctrine/inflector (2.0.4): Extracting archive
-  - Installing doctrine/lexer (1.2.1): Extracting archive
-  - Installing dragonmantank/cron-expression (v2.3.1): Extracting archive
-  - Installing symfony/polyfill-php80 (v1.23.1): Extracting archive
-  - Installing symfony/polyfill-php72 (v1.23.0): Extracting archive
-  - Installing symfony/polyfill-mbstring (v1.23.1): Extracting archive
-  - Installing symfony/var-dumper (v4.4.34): Extracting archive
-  - Installing symfony/deprecation-contracts (v2.5.0): Extracting archive
-  - Installing psr/container (1.1.2): Extracting archive
-  - Installing symfony/service-contracts (v2.5.0): Extracting archive
-  - Installing symfony/polyfill-php73 (v1.23.0): Extracting archive
-  - Installing symfony/console (v4.4.34): Extracting archive
-  - Installing scrivo/highlight.php (v9.18.1.8): Extracting archive
-  - Installing psr/log (1.1.4): Extracting archive
-  - Installing monolog/monolog (2.3.5): Extracting archive
-  - Installing symfony/polyfill-ctype (v1.23.0): Extracting archive
-  - Installing phpoption/phpoption (1.8.1): Extracting archive
-  - Installing vlucas/phpdotenv (v3.6.10): Extracting archive
-  - Installing symfony/css-selector (v5.4.0): Extracting archive
-  - Installing tijsverkoyen/css-to-inline-styles (2.2.4): Extracting archive
-  - Installing symfony/routing (v4.4.34): Extracting archive
-  - Installing symfony/process (v4.4.35): Extracting archive
-  - Installing symfony/polyfill-intl-normalizer (v1.23.0): Extracting archive
-  - Installing symfony/polyfill-intl-idn (v1.23.0): Extracting archive
-  - Installing symfony/mime (v5.4.0): Extracting archive
-  - Installing symfony/http-foundation (v4.4.34): Extracting archive
-  - Installing symfony/http-client-contracts (v2.5.0): Extracting archive
-  - Installing symfony/event-dispatcher-contracts (v1.1.11): Extracting archive
-  - Installing symfony/event-dispatcher (v4.4.34): Extracting archive
-  - Installing symfony/debug (v4.4.31): Extracting archive
-  - Installing symfony/error-handler (v4.4.34): Extracting archive
-  - Installing symfony/http-kernel (v4.4.35): Extracting archive
-  - Installing symfony/finder (v4.4.30): Extracting archive
-  - Installing symfony/polyfill-iconv (v1.23.0): Extracting archive
-  - Installing egulias/email-validator (2.1.25): Extracting archive
-  - Installing swiftmailer/swiftmailer (v6.3.0): Extracting archive
-  - Installing paragonie/random_compat (v9.99.100): Extracting archive
-  - Installing ramsey/uuid (3.9.6): Extracting archive
-  - Installing psr/simple-cache (1.0.1): Extracting archive
-  - Installing opis/closure (3.6.2): Extracting archive
-  - Installing symfony/translation-contracts (v2.5.0): Extracting archive
-  - Installing symfony/translation (v4.4.34): Extracting archive
-  - Installing nesbot/carbon (2.55.2): Extracting archive
-  - Installing league/mime-type-detection (1.9.0): Extracting archive
-  - Installing league/flysystem (1.1.9): Extracting archive
-  - Installing league/commonmark (1.6.6): Extracting archive
-  - Installing laravel/framework (v6.20.43): Extracting archive
-  - Installing filp/whoops (2.14.4): Extracting archive
-  - Installing facade/ignition-contracts (1.0.2): Extracting archive
-  - Installing facade/flare-client-php (1.9.1): Extracting archive
-  - Installing facade/ignition (1.18.0): Extracting archive
-  - Installing fakerphp/faker (v1.17.0): Extracting archive
-  - Installing fideloper/proxy (4.4.1): Extracting archive
-  - Installing nikic/php-parser (v4.13.2): Extracting archive
-  - Installing psy/psysh (v0.10.12): Extracting archive
-  - Installing laravel/tinker (v2.6.3): Extracting archive
-  - Installing hamcrest/hamcrest-php (v2.0.1): Extracting archive
-  - Installing mockery/mockery (1.4.4): Extracting archive
-  - Installing php-parallel-lint/php-console-color (v0.3): Extracting archive
-  - Installing php-parallel-lint/php-console-highlighter (v0.5): Extracting archive
-  - Installing nunomaduro/collision (v3.2.0): Extracting archive
-  - Installing webmozart/assert (1.10.0): Extracting archive
-  - Installing phpdocumentor/reflection-common (2.2.0): Extracting archive
-  - Installing phpdocumentor/type-resolver (1.5.1): Extracting archive
-  - Installing phpdocumentor/reflection-docblock (5.3.0): Extracting archive
-  - Installing sebastian/version (3.0.2): Extracting archive
-  - Installing sebastian/type (2.3.4): Extracting archive
-  - Installing sebastian/resource-operations (3.0.3): Extracting archive
-  - Installing sebastian/recursion-context (4.0.4): Extracting archive
-  - Installing sebastian/object-reflector (2.0.4): Extracting archive
-  - Installing sebastian/object-enumerator (4.0.4): Extracting archive
-  - Installing sebastian/global-state (5.0.3): Extracting archive
-  - Installing sebastian/exporter (4.0.4): Extracting archive
-  - Installing sebastian/environment (5.1.3): Extracting archive
-  - Installing sebastian/diff (4.0.4): Extracting archive
-  - Installing sebastian/comparator (4.0.6): Extracting archive
-  - Installing sebastian/code-unit (1.0.8): Extracting archive
-  - Installing sebastian/cli-parser (1.0.1): Extracting archive
-  - Installing phpunit/php-timer (5.0.3): Extracting archive
-  - Installing phpunit/php-text-template (2.0.4): Extracting archive
-  - Installing phpunit/php-invoker (3.1.1): Extracting archive
-  - Installing phpunit/php-file-iterator (3.0.6): Extracting archive
-  - Installing theseer/tokenizer (1.2.1): Extracting archive
-  - Installing sebastian/lines-of-code (1.0.3): Extracting archive
-  - Installing sebastian/complexity (2.0.2): Extracting archive
-  - Installing sebastian/code-unit-reverse-lookup (2.0.3): Extracting archive
-  - Installing phpunit/php-code-coverage (9.2.10): Extracting archive
-  - Installing doctrine/instantiator (1.4.0): Extracting archive
-  - Installing phpspec/prophecy (v1.15.0): Extracting archive
-  - Installing phar-io/version (3.1.0): Extracting archive
-  - Installing phar-io/manifest (2.0.3): Extracting archive
-  - Installing myclabs/deep-copy (1.10.2): Extracting archive
-  - Installing phpunit/phpunit (9.5.10): Extracting archive
-  0/93 [>---------------------------]   0%
-  8/93 [==>-------------------------]   8%
- 10/93 [===>------------------------]  10%
- 15/93 [====>-----------------------]  16%
- 18/93 [=====>----------------------]  19%
- 22/93 [======>---------------------]  23%
- 26/93 [=======>--------------------]  27%
- 31/93 [=========>------------------]  33%
- 34/93 [==========>-----------------]  36%
- 39/93 [===========>----------------]  41%
- 41/93 [============>---------------]  44%
- 43/93 [============>---------------]  46%
- 44/93 [=============>--------------]  47%
- 45/93 [=============>--------------]  48%
- 46/93 [=============>--------------]  49%
- 47/93 [==============>-------------]  50%
- 48/93 [==============>-------------]  51%
- 49/93 [==============>-------------]  52%
- 51/93 [===============>------------]  54%
- 52/93 [===============>------------]  55%
- 53/93 [===============>------------]  56%
- 54/93 [================>-----------]  58%
- 55/93 [================>-----------]  59%
- 56/93 [================>-----------]  60%
- 57/93 [=================>----------]  61%
- 58/93 [=================>----------]  62%
- 59/93 [=================>----------]  63%
- 62/93 [==================>---------]  66%
- 63/93 [==================>---------]  67%
- 65/93 [===================>--------]  69%
- 68/93 [====================>-------]  73%
- 69/93 [====================>-------]  74%
- 71/93 [=====================>------]  76%
- 75/93 [======================>-----]  80%
- 77/93 [=======================>----]  82%
- 80/93 [========================>---]  86%
- 82/93 [========================>---]  88%
- 83/93 [========================>---]  89%
- 84/93 [=========================>--]  90%
- 85/93 [=========================>--]  91%
- 86/93 [=========================>--]  92%
- 87/93 [==========================>-]  93%
- 88/93 [==========================>-]  94%
- 89/93 [==========================>-]  95%
- 90/93 [===========================>]  96%
- 91/93 [===========================>]  97%
- 92/93 [===========================>]  98%
- 93/93 [============================] 100%
+- Downloading doctrine/inflector (2.0.4)
+- Downloading doctrine/lexer (1.2.1)
+- Downloading dragonmantank/cron-expression (v2.3.1)
+- Downloading symfony/polyfill-php80 (v1.23.1)
+- Downloading symfony/polyfill-php72 (v1.23.0)
+- Downloading symfony/polyfill-mbstring (v1.23.1)
+- Downloading symfony/var-dumper (v4.4.34)
+- Downloading symfony/deprecation-contracts (v2.5.0)
+- Downloading psr/container (1.1.2)
+- Downloading symfony/service-contracts (v2.5.0)
+- Downloading symfony/polyfill-php73 (v1.23.0)
+- Downloading symfony/console (v4.4.34)
+- Downloading scrivo/highlight.php (v9.18.1.8)
+- Downloading psr/log (1.1.4)
+- Downloading monolog/monolog (2.3.5)
+- Downloading symfony/polyfill-ctype (v1.23.0)
+- Downloading phpoption/phpoption (1.8.1)
+- Downloading vlucas/phpdotenv (v3.6.10)
+- Downloading symfony/css-selector (v5.4.0)
+- Downloading tijsverkoyen/css-to-inline-styles (2.2.4)
+- Downloading symfony/routing (v4.4.34)
+- Downloading symfony/process (v4.4.35)
+- Downloading symfony/polyfill-intl-normalizer (v1.23.0)
+- Downloading symfony/polyfill-intl-idn (v1.23.0)
+- Downloading symfony/mime (v5.4.0)
+- Downloading symfony/http-foundation (v4.4.34)
+- Downloading symfony/http-client-contracts (v2.5.0)
+- Downloading symfony/event-dispatcher-contracts (v1.1.11)
+- Downloading symfony/event-dispatcher (v4.4.34)
+- Downloading symfony/debug (v4.4.31)
+- Downloading symfony/error-handler (v4.4.34)
+- Downloading symfony/http-kernel (v4.4.35)
+- Downloading symfony/finder (v4.4.30)
+- Downloading symfony/polyfill-iconv (v1.23.0)
+- Downloading egulias/email-validator (2.1.25)
+- Downloading swiftmailer/swiftmailer (v6.3.0)
+- Downloading paragonie/random_compat (v9.99.100)
+- Downloading ramsey/uuid (3.9.6)
+- Downloading psr/simple-cache (1.0.1)
+- Downloading opis/closure (3.6.2)
+- Downloading symfony/translation-contracts (v2.5.0)
+- Downloading symfony/translation (v4.4.34)
+- Downloading nesbot/carbon (2.55.2)
+- Downloading league/mime-type-detection (1.9.0)
+- Downloading league/flysystem (1.1.9)
+- Downloading league/commonmark (1.6.6)
+- Downloading laravel/framework (v6.20.43)
+- Downloading filp/whoops (2.14.4)
+- Downloading facade/ignition-contracts (1.0.2)
+- Downloading facade/flare-client-php (1.9.1)
+- Downloading facade/ignition (1.18.0)
+- Downloading fakerphp/faker (v1.17.0)
+- Downloading fideloper/proxy (4.4.1)
+- Downloading nikic/php-parser (v4.13.2)
+- Downloading psy/psysh (v0.10.12)
+- Downloading laravel/tinker (v2.6.3)
+- Downloading hamcrest/hamcrest-php (v2.0.1)
+- Downloading mockery/mockery (1.4.4)
+- Downloading php-parallel-lint/php-console-color (v0.3)
+- Downloading php-parallel-lint/php-console-highlighter (v0.5)
+- Downloading nunomaduro/collision (v3.2.0)
+- Downloading webmozart/assert (1.10.0)
+- Downloading phpdocumentor/reflection-common (2.2.0)
+- Downloading phpdocumentor/type-resolver (1.5.1)
+- Downloading phpdocumentor/reflection-docblock (5.3.0)
+- Downloading sebastian/version (3.0.2)
+- Downloading sebastian/type (2.3.4)
+- Downloading sebastian/resource-operations (3.0.3)
+- Downloading sebastian/recursion-context (4.0.4)
+- Downloading sebastian/object-reflector (2.0.4)
+- Downloading sebastian/object-enumerator (4.0.4)
+- Downloading sebastian/global-state (5.0.3)
+- Downloading sebastian/exporter (4.0.4)
+- Downloading sebastian/environment (5.1.3)
+- Downloading sebastian/diff (4.0.4)
+- Downloading sebastian/comparator (4.0.6)
+- Downloading sebastian/code-unit (1.0.8)
+- Downloading sebastian/cli-parser (1.0.1)
+- Downloading phpunit/php-timer (5.0.3)
+- Downloading phpunit/php-text-template (2.0.4)
+- Downloading phpunit/php-invoker (3.1.1)
+- Downloading phpunit/php-file-iterator (3.0.6)
+- Downloading theseer/tokenizer (1.2.1)
+- Downloading sebastian/lines-of-code (1.0.3)
+- Downloading sebastian/complexity (2.0.2)
+- Downloading sebastian/code-unit-reverse-lookup (2.0.3)
+- Downloading phpunit/php-code-coverage (9.2.10)
+- Downloading doctrine/instantiator (1.4.0)
+- Downloading phpspec/prophecy (v1.15.0)
+- Downloading phar-io/version (3.1.0)
+- Downloading phar-io/manifest (2.0.3)
+- Downloading myclabs/deep-copy (1.10.2)
+- Downloading phpunit/phpunit (9.5.10)
+0/93 [>---------------------------] 0%
+3/93 [>---------------------------] 3%
+9/93 [==>-------------------------] 9%
+11/93 [===>------------------------] 11%
+13/93 [===>------------------------] 13%
+17/93 [=====>----------------------] 18%
+20/93 [======>---------------------] 21%
+21/93 [======>---------------------] 22%
+22/93 [======>---------------------] 23%
+25/93 [=======>--------------------] 26%
+28/93 [========>-------------------] 30%
+32/93 [=========>------------------] 34%
+35/93 [==========>-----------------] 37%
+38/93 [===========>----------------] 40%
+42/93 [============>---------------] 45%
+44/93 [=============>--------------] 47%
+47/93 [==============>-------------] 50%
+48/93 [==============>-------------] 51%
+51/93 [===============>------------] 54%
+53/93 [===============>------------] 56%
+57/93 [=================>----------] 61%
+58/93 [=================>----------] 62%
+62/93 [==================>---------] 66%
+70/93 [=====================>------] 75%
+74/93 [======================>-----] 79%
+78/93 [=======================>----] 83%
+86/93 [=========================>--] 92%
+90/93 [===========================>] 96%
+93/93 [============================] 100%
+- Installing doctrine/inflector (2.0.4): Extracting archive
+- Installing doctrine/lexer (1.2.1): Extracting archive
+- Installing dragonmantank/cron-expression (v2.3.1): Extracting archive
+- Installing symfony/polyfill-php80 (v1.23.1): Extracting archive
+- Installing symfony/polyfill-php72 (v1.23.0): Extracting archive
+- Installing symfony/polyfill-mbstring (v1.23.1): Extracting archive
+- Installing symfony/var-dumper (v4.4.34): Extracting archive
+- Installing symfony/deprecation-contracts (v2.5.0): Extracting archive
+- Installing psr/container (1.1.2): Extracting archive
+- Installing symfony/service-contracts (v2.5.0): Extracting archive
+- Installing symfony/polyfill-php73 (v1.23.0): Extracting archive
+- Installing symfony/console (v4.4.34): Extracting archive
+- Installing scrivo/highlight.php (v9.18.1.8): Extracting archive
+- Installing psr/log (1.1.4): Extracting archive
+- Installing monolog/monolog (2.3.5): Extracting archive
+- Installing symfony/polyfill-ctype (v1.23.0): Extracting archive
+- Installing phpoption/phpoption (1.8.1): Extracting archive
+- Installing vlucas/phpdotenv (v3.6.10): Extracting archive
+- Installing symfony/css-selector (v5.4.0): Extracting archive
+- Installing tijsverkoyen/css-to-inline-styles (2.2.4): Extracting archive
+- Installing symfony/routing (v4.4.34): Extracting archive
+- Installing symfony/process (v4.4.35): Extracting archive
+- Installing symfony/polyfill-intl-normalizer (v1.23.0): Extracting archive
+- Installing symfony/polyfill-intl-idn (v1.23.0): Extracting archive
+- Installing symfony/mime (v5.4.0): Extracting archive
+- Installing symfony/http-foundation (v4.4.34): Extracting archive
+- Installing symfony/http-client-contracts (v2.5.0): Extracting archive
+- Installing symfony/event-dispatcher-contracts (v1.1.11): Extracting archive
+- Installing symfony/event-dispatcher (v4.4.34): Extracting archive
+- Installing symfony/debug (v4.4.31): Extracting archive
+- Installing symfony/error-handler (v4.4.34): Extracting archive
+- Installing symfony/http-kernel (v4.4.35): Extracting archive
+- Installing symfony/finder (v4.4.30): Extracting archive
+- Installing symfony/polyfill-iconv (v1.23.0): Extracting archive
+- Installing egulias/email-validator (2.1.25): Extracting archive
+- Installing swiftmailer/swiftmailer (v6.3.0): Extracting archive
+- Installing paragonie/random_compat (v9.99.100): Extracting archive
+- Installing ramsey/uuid (3.9.6): Extracting archive
+- Installing psr/simple-cache (1.0.1): Extracting archive
+- Installing opis/closure (3.6.2): Extracting archive
+- Installing symfony/translation-contracts (v2.5.0): Extracting archive
+- Installing symfony/translation (v4.4.34): Extracting archive
+- Installing nesbot/carbon (2.55.2): Extracting archive
+- Installing league/mime-type-detection (1.9.0): Extracting archive
+- Installing league/flysystem (1.1.9): Extracting archive
+- Installing league/commonmark (1.6.6): Extracting archive
+- Installing laravel/framework (v6.20.43): Extracting archive
+- Installing filp/whoops (2.14.4): Extracting archive
+- Installing facade/ignition-contracts (1.0.2): Extracting archive
+- Installing facade/flare-client-php (1.9.1): Extracting archive
+- Installing facade/ignition (1.18.0): Extracting archive
+- Installing fakerphp/faker (v1.17.0): Extracting archive
+- Installing fideloper/proxy (4.4.1): Extracting archive
+- Installing nikic/php-parser (v4.13.2): Extracting archive
+- Installing psy/psysh (v0.10.12): Extracting archive
+- Installing laravel/tinker (v2.6.3): Extracting archive
+- Installing hamcrest/hamcrest-php (v2.0.1): Extracting archive
+- Installing mockery/mockery (1.4.4): Extracting archive
+- Installing php-parallel-lint/php-console-color (v0.3): Extracting archive
+- Installing php-parallel-lint/php-console-highlighter (v0.5): Extracting archive
+- Installing nunomaduro/collision (v3.2.0): Extracting archive
+- Installing webmozart/assert (1.10.0): Extracting archive
+- Installing phpdocumentor/reflection-common (2.2.0): Extracting archive
+- Installing phpdocumentor/type-resolver (1.5.1): Extracting archive
+- Installing phpdocumentor/reflection-docblock (5.3.0): Extracting archive
+- Installing sebastian/version (3.0.2): Extracting archive
+- Installing sebastian/type (2.3.4): Extracting archive
+- Installing sebastian/resource-operations (3.0.3): Extracting archive
+- Installing sebastian/recursion-context (4.0.4): Extracting archive
+- Installing sebastian/object-reflector (2.0.4): Extracting archive
+- Installing sebastian/object-enumerator (4.0.4): Extracting archive
+- Installing sebastian/global-state (5.0.3): Extracting archive
+- Installing sebastian/exporter (4.0.4): Extracting archive
+- Installing sebastian/environment (5.1.3): Extracting archive
+- Installing sebastian/diff (4.0.4): Extracting archive
+- Installing sebastian/comparator (4.0.6): Extracting archive
+- Installing sebastian/code-unit (1.0.8): Extracting archive
+- Installing sebastian/cli-parser (1.0.1): Extracting archive
+- Installing phpunit/php-timer (5.0.3): Extracting archive
+- Installing phpunit/php-text-template (2.0.4): Extracting archive
+- Installing phpunit/php-invoker (3.1.1): Extracting archive
+- Installing phpunit/php-file-iterator (3.0.6): Extracting archive
+- Installing theseer/tokenizer (1.2.1): Extracting archive
+- Installing sebastian/lines-of-code (1.0.3): Extracting archive
+- Installing sebastian/complexity (2.0.2): Extracting archive
+- Installing sebastian/code-unit-reverse-lookup (2.0.3): Extracting archive
+- Installing phpunit/php-code-coverage (9.2.10): Extracting archive
+- Installing doctrine/instantiator (1.4.0): Extracting archive
+- Installing phpspec/prophecy (v1.15.0): Extracting archive
+- Installing phar-io/version (3.1.0): Extracting archive
+- Installing phar-io/manifest (2.0.3): Extracting archive
+- Installing myclabs/deep-copy (1.10.2): Extracting archive
+- Installing phpunit/phpunit (9.5.10): Extracting archive
+0/93 [>---------------------------] 0%
+8/93 [==>-------------------------] 8%
+10/93 [===>------------------------] 10%
+15/93 [====>-----------------------] 16%
+18/93 [=====>----------------------] 19%
+22/93 [======>---------------------] 23%
+26/93 [=======>--------------------] 27%
+31/93 [=========>------------------] 33%
+34/93 [==========>-----------------] 36%
+39/93 [===========>----------------] 41%
+41/93 [============>---------------] 44%
+43/93 [============>---------------] 46%
+44/93 [=============>--------------] 47%
+45/93 [=============>--------------] 48%
+46/93 [=============>--------------] 49%
+47/93 [==============>-------------] 50%
+48/93 [==============>-------------] 51%
+49/93 [==============>-------------] 52%
+51/93 [===============>------------] 54%
+52/93 [===============>------------] 55%
+53/93 [===============>------------] 56%
+54/93 [================>-----------] 58%
+55/93 [================>-----------] 59%
+56/93 [================>-----------] 60%
+57/93 [=================>----------] 61%
+58/93 [=================>----------] 62%
+59/93 [=================>----------] 63%
+62/93 [==================>---------] 66%
+63/93 [==================>---------] 67%
+65/93 [===================>--------] 69%
+68/93 [====================>-------] 73%
+69/93 [====================>-------] 74%
+71/93 [=====================>------] 76%
+75/93 [======================>-----] 80%
+77/93 [=======================>----] 82%
+80/93 [========================>---] 86%
+82/93 [========================>---] 88%
+83/93 [========================>---] 89%
+84/93 [=========================>--] 90%
+85/93 [=========================>--] 91%
+86/93 [=========================>--] 92%
+87/93 [==========================>-] 93%
+88/93 [==========================>-] 94%
+89/93 [==========================>-] 95%
+90/93 [===========================>] 96%
+91/93 [===========================>] 97%
+92/93 [===========================>] 98%
+93/93 [============================] 100%
 79 package suggestions were added by new dependencies, use `composer suggest` to see details.
 Package swiftmailer/swiftmailer is abandoned, you should avoid using it. Use symfony/mailer instead.
 Generating optimized autoload files
 > Illuminate\Foundation\ComposerScripts::postAutoloadDump
 > @php artisan package:discover --ansi
-Discovered Package: facade/ignition
-Discovered Package: fideloper/proxy
-Discovered Package: laravel/tinker
-Discovered Package: nesbot/carbon
-Discovered Package: nunomaduro/collision
-Package manifest generated successfully.
-68 packages you are using are looking for funding.
-Use the `composer fund` command to find out more!
+> Discovered Package: facade/ignition
+> Discovered Package: fideloper/proxy
+> Discovered Package: laravel/tinker
+> Discovered Package: nesbot/carbon
+> Discovered Package: nunomaduro/collision
+> Package manifest generated successfully.
+> 68 packages you are using are looking for funding.
+> Use the `composer fund` command to find out more!
 > @php artisan key:generate --ansi
-Application key set successfully.
+> Application key set successfully.
 
 ```
+
+</details>
 
 ローカルホストにアクセス
 http://localhost:8080/
